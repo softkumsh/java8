@@ -1,0 +1,18 @@
+package com.trendy.java8.test;
+
+public class LamdaTest {
+	
+	
+	
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		intCount = (int a) -> a*10;
+
+	}
+
+}
+
+interface Test {
+	int add (int a);
+}

@@ -1,0 +1,42 @@
+package com.trendy.spark.textprocess;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Pattern;
+
+import org.apache.spark.SparkConf;
+import org.apache.spark.SparkContext;
+import org.apache.spark.api.java.JavaPairRDD;
+import org.apache.spark.api.java.JavaRDD;
+
+import scala.Tuple2;
+
+public final class WordCount {
+	private static final Pattern SPACE = Pattern.compile(" ");
+
+	public static void main(String[] args) throws Exception {
+
+		SparkConf conf = new SparkConf().setAppName("ClusterScore").setMaster("local") 
+				.set("spark.storage.memoryFraction", "1");
+
+		SparkContext jsc = new SparkContext(conf);
+
+		String file = "/home/softkumsh/baby/school.odt";
+
+		JavaRDD<String> lines = jsc.textFile(file, 2).toJavaRDD();
+
+
+		JavaRDD<String> words = lines.flatMap(s -> Arrays.asList(SPACE.split(s)).iterator());
+
+		JavaPairRDD<String, Integer> ones = words.mapToPair(s -> new Tuple2<>(s, 1));
+
+		JavaPairRDD<String, Integer> counts = ones.reduceByKey((i1, i2) -> i1 + i2);
+		System.out.println("kumaresan");
+		System.out.println(counts.count());
+
+		List<Tuple2<String, Integer>> output = counts.collect();
+		for (Tuple2<?, ?> tuple : output) {
+			System.out.println(tuple._1().toString() + ": " + tuple._2().toString());
+		}
+	}
+}

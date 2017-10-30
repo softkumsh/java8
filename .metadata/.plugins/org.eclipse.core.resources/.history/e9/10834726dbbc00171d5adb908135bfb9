@@ -1,0 +1,13 @@
+/**
+ * 
+ */
+package com.trendy.java8.test;
+
+/**
+ * @author softkumsh
+ *
+ */
+public interface Test {
+	int add (int a);
+
+}

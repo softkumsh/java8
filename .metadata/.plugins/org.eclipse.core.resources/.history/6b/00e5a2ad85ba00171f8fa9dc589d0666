@@ -1,0 +1,5 @@
+package com.trendy.spark.textprocess;
+
+public class WordCount {
+
+}
